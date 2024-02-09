@@ -14,7 +14,7 @@ public class bataillle {
     public static int [ ][ ] grilleJeu = new int [10] [10];
 
     /**
-     *  <H2>Position Valide<H2/>
+     *  <H2>PositionValide<H2/>
      * <p>
      *     Methode pour savoir dans une grille a une position x, y avec un bateau de taille t et de direction 1 ou 2 si le bateau peut être placé.
      *     <p/>
@@ -44,5 +44,57 @@ public class bataillle {
                 ligne++;
         }
         return true;
+    }
+
+    /**
+     *  <H2>AjoutBat<H2/>
+     * <p>
+     *     Methode pour ajouter dans une grille a une position x, y un bateau de taille t et de direction 1 (horizontal) ou 2 (vertical).
+     *     <p/>
+     * @param grille Grille sur laquelle on travail : int [ ] [ ]
+     * @param ligne Ligne pour placer le bateau : int
+     * @param colonne Colonne pour placer le bateau : int
+     * @param direction Direction dans laquelle doit être le bateau  nombre impaires (1) pour horizontal et paire (2) pour vertical  : int
+     * @param t Taille du bateau entre 2 et 5 : int
+     * @return  Retourne le tableau resultat contenant le bateau s'il a été possible de l'ajouter int [ ] [ ]
+     */
+    public static int [ ] [ ] ajouteBat(int [ ] [ ] grille, int ligne, int colonne, int direction, int t) throws Exception {
+        if (positionValide(grille, ligne, colonne, direction, t))
+            throw new Exception("Impossible d'ajouter le bateau ! As tu vérifié que y'avait la place ?");
+
+        if (t < 2) t = 2;
+        if (t > 5) t = 5;
+        direction = direction%2;
+
+
+        int indentificationBateau;
+        /*
+        *  1 indique la présence d’un porte-avions
+        * 2 indique la présence d’un croiseur
+        * 3 indique la présence d’un contre-torpilleur
+        * 4 indique la présence d’un sous-marin
+        * 5 indique la présence d’un torpilleur
+        * */
+
+        switch (t) {
+            case 6 : indentificationBateau = 1; break;
+            case 5 : indentificationBateau = 2; break;
+            case 4 : indentificationBateau = 3; break;
+            case 3 : indentificationBateau = 4; break;
+            case 2 : default : indentificationBateau = 5;
+        }
+
+        for (int caseRestante = t; caseRestante > 0 ; caseRestante--) {
+
+            grille[ligne][colonne] = indentificationBateau;
+
+            //direction paire -> Vertical
+            if (direction == 0)
+                colonne++;
+                //direction impaire -> Horizontal
+            else
+                ligne++;
+        }
+        return grille;
     }
 }
