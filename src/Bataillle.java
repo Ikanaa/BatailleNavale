@@ -15,12 +15,13 @@ public class Bataillle {
     public static int [ ][ ] grilleOrdi = new int [10] [10];
     public static int [ ][ ] grilleJeu = new int [10] [10];
 
-    /*
-    public final Map<Integer, Map<String, Integer>> TypeBateau =
-            Map.ofEntries(
-                    Map.entry(1, Map.entry("Porte-Avions", 5))
-            );
-     */
+    private final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
+        Map.entry(1,  new Bateau("porte-avion", 5, 1)),
+        Map.entry(2,  new Bateau("croiseur", 4, 2)),
+        Map.entry(3,  new Bateau("contre-torpilleur", 3, 3)),
+        Map.entry(4,  new Bateau("sous-marin", 3, 4)),
+        Map.entry(5,  new Bateau("torpilleur", 2, 5))
+    );
 
     /**
      *  <H2>positionValide<H2/>
