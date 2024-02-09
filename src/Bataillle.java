@@ -1,3 +1,4 @@
+import java.util.Map;
 import java.util.Random;
 
 
@@ -9,12 +10,20 @@ import java.util.Random;
  *      @Description
  *          Création d'un jeu de bataille navale tel que le jeux de société <a href="https://www.wikiwand.com/fr/Bataille_navale_(jeu)">Bataille Navale</a> !
 */
-public class bataillle {
+public class Bataillle {
+    public static Random rand = new Random();
     public static int [ ][ ] grilleOrdi = new int [10] [10];
     public static int [ ][ ] grilleJeu = new int [10] [10];
 
+    /*
+    public final Map<Integer, Map<String, Integer>> TypeBateau =
+            Map.ofEntries(
+                    Map.entry(1, Map.entry("Porte-Avions", 5))
+            );
+     */
+
     /**
-     *  <H2>PositionValide<H2/>
+     *  <H2>positionValide<H2/>
      * <p>
      *     Methode pour savoir dans une grille a une position x, y avec un bateau de taille t et de direction 1 ou 2 si le bateau peut être placé.
      *     <p/>
@@ -33,6 +42,9 @@ public class bataillle {
 
 
         for (int caseRestante = t; caseRestante > 0 ; caseRestante--) {
+            if (ligne > 9 || colonne > 9 || ligne < 0 || colonne < 0)
+                return false;
+
             if (grille[ligne][colonne] != 0)
                 return false;
 
@@ -47,7 +59,23 @@ public class bataillle {
     }
 
     /**
-     *  <H2>AjoutBat<H2/>
+     *  <H2>aleatoireEntre<H2/>
+     *
+     *  <p>
+     *      Retourne un nombre pseudo aléatoire entre debut et fin
+     *      <p/>
+     *
+     * @param debut Debut de la borne pour le nombre aléatoire
+     * @param fin Fin de la borne pour le nombre aléatoire
+     * @return Nombre selectionné : int
+     */
+    public static int aleatoireEntre(int debut, int fin)
+    {
+        return rand.nextInt(fin-debut)+ debut;
+    }
+
+    /**
+     *  <H2>ajoutBat<H2/>
      * <p>
      *     Methode pour ajouter dans une grille a une position x, y un bateau de taille t et de direction 1 (horizontal) ou 2 (vertical).
      *     <p/>
@@ -96,5 +124,15 @@ public class bataillle {
                 ligne++;
         }
         return grille;
+    }
+
+    public static void initGrilleOrdi() {
+        // Mise a zero de la Grille
+        for ( int [ ] ligne : grilleOrdi)
+            for (int caase : ligne)
+                caase = 0;
+
+
+
     }
 }
