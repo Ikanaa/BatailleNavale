@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  *
- *      @author Louis Saffré
+ *      @author <h2>Louis Saffré</h2>
  *      @Sujet Jeu de Bataille Navale (Touché Coulé / BattleShip) !
  *      @version 0.1
  *      @Description
@@ -15,7 +15,7 @@ public class Bataillle {
     public static int [ ][ ] grilleOrdi = new int [10] [10];
     public static int [ ][ ] grilleJeu = new int [10] [10];
 
-    private final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
+    private static final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
         Map.entry(1,  new Bateau("porte-avion", 5, 1)),
         Map.entry(2,  new Bateau("croiseur", 4, 2)),
         Map.entry(3,  new Bateau("contre-torpilleur", 3, 3)),
@@ -75,6 +75,10 @@ public class Bataillle {
         return rand.nextInt(fin-debut)+ debut;
     }
 
+
+
+
+
     /**
      *  <H2>ajoutBat<H2/>
      * <p>
@@ -84,38 +88,20 @@ public class Bataillle {
      * @param ligne Ligne pour placer le bateau : int
      * @param colonne Colonne pour placer le bateau : int
      * @param direction Direction dans laquelle doit être le bateau  nombre impaires (1) pour horizontal et paire (2) pour vertical  : int
-     * @param t Taille du bateau entre 2 et 5 : int
+     * @param bat Objet contenant les informations relative au bateau : Bateau
      * @return  Retourne le tableau resultat contenant le bateau s'il a été possible de l'ajouter int [ ] [ ]
      */
-    public static int [ ] [ ] ajouteBat(int [ ] [ ] grille, int ligne, int colonne, int direction, int t) throws Exception {
-        if (positionValide(grille, ligne, colonne, direction, t))
+    public static int [ ] [ ] ajouteBat(int [ ] [ ] grille, int ligne, int colonne, int direction, Bateau bat) throws Exception {
+        if (positionValide(grille, ligne, colonne, direction, bat.obtenirTaille()))
             throw new Exception("Impossible d'ajouter le bateau ! As tu vérifié que y'avait la place ?");
 
-        if (t < 2) t = 2;
-        if (t > 5) t = 5;
         direction = direction%2;
 
 
-        int indentificationBateau;
-        /*
-        *  1 indique la présence d’un porte-avions
-        * 2 indique la présence d’un croiseur
-        * 3 indique la présence d’un contre-torpilleur
-        * 4 indique la présence d’un sous-marin
-        * 5 indique la présence d’un torpilleur
-        * */
 
-        switch (t) {
-            case 6 : indentificationBateau = 1; break;
-            case 5 : indentificationBateau = 2; break;
-            case 4 : indentificationBateau = 3; break;
-            case 3 : indentificationBateau = 4; break;
-            case 2 : default : indentificationBateau = 5;
-        }
+        for (int caseRestante = bat.obtenirTaille(); caseRestante > 0 ; caseRestante--) {
 
-        for (int caseRestante = t; caseRestante > 0 ; caseRestante--) {
-
-            grille[ligne][colonne] = indentificationBateau;
+            grille[ligne][colonne] = bat.obtenirIdentifiant();
 
             //direction paire -> Vertical
             if (direction == 0)
@@ -130,10 +116,35 @@ public class Bataillle {
     public static void initGrilleOrdi() {
         // Mise a zero de la Grille
         for ( int [ ] ligne : grilleOrdi)
+            // case est reservé.... donc caase
             for (int caase : ligne)
                 caase = 0;
 
 
+        for (Map.Entry<Integer, Bateau> entree :  LISTEBATEAU.entrySet())
+        {
+            Bateau bateauActuel = entree.getValue();
+
+            boolean posOk = false;
+            while (!posOk)
+            {
+                int ligne = aleatoireEntre(0,9);
+                int colonne = aleatoireEntre(0,9);
+                int direction = aleatoireEntre(1, 2);
+
+                if (positionValide(grilleOrdi, ligne, colonne, direction, bateauActuel.obtenirTaille()))
+                {
+                    posOk = true;
+
+                    //Ajout du bateau quand tout est ok !
+                    try {
+                        ajouteBat(grilleOrdi, ligne, colonne, direction, bateauActuel);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
 
     }
 }

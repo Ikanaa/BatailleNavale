@@ -1,6 +1,6 @@
 /**
  *   <H1>Bateau<H1/>
- *      @author Louis Saffré
+ *      @author <h2>Louis Saffré<h2/>
  *      @Description
  *          Classe Bateau permettant de regrouper les informations des bateaux (type, taille, chiffreIdentifiant)
  */
