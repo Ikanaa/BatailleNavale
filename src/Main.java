@@ -10,9 +10,9 @@ public class Main {
 
       for (int[] ligne : testBataille.grilleOrdi)
       {
-          System.out.println("\n");
+          System.out.print("\n");
           for (int collone : ligne) {
-            System.out.println(" " + collone);
+            System.out.print("  " + collone);
           }
       }
   }
