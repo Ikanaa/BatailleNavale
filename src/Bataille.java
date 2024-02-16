@@ -10,10 +10,17 @@ import java.util.Random;
  *      @Description
  *          Création d'un jeu de bataille navale tel que le jeux de société <a href="https://www.wikiwand.com/fr/Bataille_navale_(jeu)">Bataille Navale</a> !
 */
-public class Bataillle {
-    public static Random rand = new Random();
-    public static int [ ][ ] grilleOrdi = new int [10] [10];
-    public static int [ ][ ] grilleJeu = new int [10] [10];
+public class Bataille {
+    public static Random rand;
+    public static int [ ][ ] grilleOrdi;
+    public static int [ ][ ] grilleJeu;
+
+    public Bataille() {
+        //Rien ?
+        rand = new Random();
+        grilleOrdi = new int [10] [10];
+        grilleJeu = new int [10] [10];
+    }
 
     private static final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
         Map.entry(1,  new Bateau("porte-avion", 5, 1)),
@@ -113,6 +120,13 @@ public class Bataillle {
         return grille;
     }
 
+
+    /**
+     *  <H2>initGrilleOrdi<H2/>
+     * <p>
+     *     Methode pour initialiser la grille de jeu de l'ordinateur.
+     *     <p/>
+     */
     public static void initGrilleOrdi() {
         // Mise a zero de la Grille
         for ( int [ ] ligne : grilleOrdi)
