@@ -6,14 +6,12 @@ public class Main {
       Bataille testBataille;
       testBataille = new Bataille();
 
+      Vue testVue;
+      testVue = new Vue();
+
       testBataille.initGrilleOrdi();
 
-      for (int[] ligne : testBataille.grilleOrdi)
-      {
-          System.out.print("\n");
-          for (int collone : ligne) {
-            System.out.print("  " + collone);
-          }
-      }
+      testVue.afficherGrille(testBataille.grilleOrdi);
+
   }
 }
