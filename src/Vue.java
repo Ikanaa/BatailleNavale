@@ -7,15 +7,28 @@
 
 public class Vue {
 
-    public static final String ANSI_Zero = "\u001B[0m";
-    public static final String ANSI_Noir = "\u001B[30m";
-    public static final String ANSI_Rouge = "\u001B[31m";
-    public static final String ANSI_Vert = "\u001B[32m";
-    public static final String ANSI_Jaune = "\u001B[33m";
-    public static final String ANSI_Bleu = "\u001B[34m";
-    public static final String ANSI_Violet = "\u001B[35m";
-    public static final String ANSI_Cyan = "\u001B[36m";
-    public static final String ANSI_Blanc = "\u001B[37m";
+    private static final String ANSI_ZERO = "\u001B[0m";
+    private static final String ANSI_NOIR = "\u001B[30m";
+    private static final String ANSI_ROUGE = "\u001B[31m";
+    private static final String ANSI_VERT = "\u001B[32m";
+    private static final String ANSI_JAUNE = "\u001B[33m";
+    private static final String ANSI_BLEU = "\u001B[34m";
+    private static final String ANSI_VIOLET = "\u001B[35m";
+    private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_BLANC = "\u001B[37m";
+
+    private static final String MENU_PRINCIPALE
+            = "\n"
+            + "Bienvenue dans le Menu de la Bataille Navale ! \n"
+            + "   Option du menu : \n"
+            + "     1 - Démarrer le jeux"
+            + "\n\n\n";
+    private static final String DEMANDE_LIGNE
+            = "\nVeuillez entrez la ligne sur laquelle placer le Bateau (1,2,3...10)\n";
+    private static final String DEMANDE_COLONNE
+            = "\nVeuillez entrez la colonne sur laquelle placer le Bateau (A,B,C...J)\n";
+    private static final String DEMANDE_ORIENTATION
+            = "\nVeuillez entrez l'orientation du Bateau (1 horizontal, 2 vertical)\n";
 
 
     public Vue() {
@@ -44,20 +57,32 @@ public class Vue {
                 switch (collone)
                 {
                     case 0:
-                        System.out.print(ANSI_Bleu);
+                        System.out.print(ANSI_BLEU);
                         break;
                     case 6:
-                        System.out.print(ANSI_Rouge);
+                        System.out.print(ANSI_ROUGE);
                         break;
                     default:
-                        System.out.print(ANSI_Vert);
+                        System.out.print(ANSI_VERT);
                 }
 
                 System.out.print("  " + collone);
-                System.out.print(ANSI_Zero);
+                System.out.print(ANSI_ZERO);
             }
         }
     }
+
+    /**
+     * <H2>afficherMenuPrincipale</H2>
+     * <p>
+     *     Permet d'afficher le menu principale du jeu.
+     * </p>
+     */
+    public void afficherMenuPrincipale()
+    {
+        System.out.print(MENU_PRINCIPALE);
+    }
+
 
     /**
      * <h2>formaterString</h2>
@@ -77,4 +102,8 @@ public class Vue {
 
         return str;
     }
+
+    public void demanderLigne() {System.out.print(DEMANDE_LIGNE);}
+    public void demanderColonne() {System.out.print(DEMANDE_COLONNE);}
+    public void demandeOrientation() {System.out.print(DEMANDE_ORIENTATION);}
 }

@@ -15,6 +15,8 @@ public class Bataille {
     public int [ ][ ] grilleOrdi;
     public int [ ][ ] grilleJeu;
 
+    public Controleur controleur;
+
     public Bataille() {
         //Rien ?
         rand = new Random();
@@ -128,11 +130,12 @@ public class Bataille {
      *     <p/>
      */
     public void initGrilleOrdi() {
-        // Mise a zero de la Grille
-        for ( int [ ] ligne : grilleOrdi)
-            // case est reservé.... donc caase
-            for (int caase : ligne)
-                caase = 0;
+        //Grille déjà a zero ?
+//        // Mise a zero de la Grille
+//        for ( int [ ] ligne : grilleOrdi)
+//            // case est reservé.... donc caase
+//            for (int caase : ligne)
+//                caase = 0;
 
 
         for (Map.Entry<Integer, Bateau> entree :  LISTEBATEAU.entrySet())
@@ -160,5 +163,34 @@ public class Bataille {
             }
         }
 
+    }
+
+    public void initGrilleJoueur()
+    {
+        for (Map.Entry<Integer, Bateau> entree :  LISTEBATEAU.entrySet())
+        {
+            Bateau bateauActuel = entree.getValue();
+
+            boolean posOk = false;
+            while (!posOk)
+            {
+                int[] info = controleur.demandePositionBateau();
+                int ligne = info[0];
+                int colonne = info[1];
+                int direction = info[2];
+
+                if (positionValide(grilleJeu, ligne, colonne, direction, bateauActuel.obtenirTaille()))
+                {
+                    posOk = true;
+
+                    //Ajout du bateau quand tout est ok !
+                    try {
+                        grilleJeu = ajouteBat(grilleJeu, ligne, colonne, direction, bateauActuel);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }
     }
 }
