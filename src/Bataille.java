@@ -174,7 +174,7 @@ public class Bataille {
             boolean posOk = false;
             while (!posOk)
             {
-                int[] info = controleur.demandePositionBateau();
+                int[] info = controleur.demandePositionBateau(bateauActuel);
                 int ligne = info[0];
                 int colonne = info[1];
                 int direction = info[2];

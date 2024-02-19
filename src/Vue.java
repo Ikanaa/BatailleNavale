@@ -103,6 +103,13 @@ public class Vue {
         return str;
     }
 
+    public void demanderBateau(Bateau bateau)
+    {
+        System.out.print(
+                "Veuillez placer le : " + bateau.obtenirType() + " (" + bateau.obtenirTaille() + ") " + " .\n"
+        );
+    }
+
     public void demanderLigne() {System.out.print(DEMANDE_LIGNE);}
     public void demanderColonne() {System.out.print(DEMANDE_COLONNE);}
     public void demandeOrientation() {System.out.print(DEMANDE_ORIENTATION);}

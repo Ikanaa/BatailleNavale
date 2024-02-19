@@ -22,6 +22,12 @@ public class Controleur {
         //Rien ?
     }
 
+    /**
+     * <h2>menuPrincipale</h2>
+     * <p>
+     *     Fonction pour gérer le menu principale
+     * </p>
+     */
     public void menuPrincipale()
     {
         int option = -1;
@@ -40,6 +46,12 @@ public class Controleur {
 
     }
 
+    /**
+     * <h2>demarrerJeu</h2>
+     * <p>
+     *     Fonction pour démarrer le jeu
+     * </p>
+     */
     public void demarrerJeu()
     {
         bataille.controleur = this;
@@ -50,6 +62,16 @@ public class Controleur {
         //do things
     }
 
+    /**
+     * <h2>entierDansListe</h2>
+     * <p>
+     *     Permet de savoir si un entier est présent dans un liste.
+     * </p>
+     *
+     * @param liste La liste que l'on va regarder : int[]
+     * @param entier L'entier qui devrait apparaitre dans la liste : int
+     * @return Si l'entier apparait dans la liste : boolean
+     */
     private boolean entierDansListe(int[] liste, int entier)
     {
         for (int elem : liste)
@@ -60,6 +82,13 @@ public class Controleur {
         return false;
     }
 
+    /**
+     * <h2>lectureChaine</h2>
+     * <p>
+     *     Permet de récupérer une chaine de charactère dans l'entrée console.
+     * </p>
+     * @return La chaine récupérée : String
+     */
     public String lectureChaine()
     {
         String resultat = "";
@@ -74,6 +103,14 @@ public class Controleur {
         return resultat;
     }
 
+    /**
+     * <h2>estEntier</h2>
+     * <p>
+     *     Fontion qui vérifie si une chaine peut être transformé en entier.
+     * </p>
+     * @param chaine La chaine qui doit être vérifié : String
+     * @return Si oui ou non elle est un entier : boolean
+     */
     public static boolean estEntier( String chaine)
     {
         try {
@@ -85,6 +122,13 @@ public class Controleur {
         }
     }
 
+    /**
+     * <h2>lectureEntier</h2>
+     * <p>
+     *     Permet de lire un entier dans l'entrée console.
+     * </p>
+     * @return L'entier qui a été lu : int
+     */
     public int lectureEntier ()
     {
         while (true)
@@ -98,10 +142,28 @@ public class Controleur {
         }
     }
 
-    public int[] demandePositionBateau()
+    /**
+     * <h2>demandePositionBateau</h2>
+     * <p>
+     *     Permet de demander a l'utilisateur la positon d'un Bateau.
+     * </p>
+     * @param bateau Le bateau dont on demande la position : Bateau
+     *
+     * @return Une liste composé de la ligne, la colonne et l'orientation.
+     */
+    public int[] demandePositionBateau(Bateau bateau)
     {
+        vue.demanderBateau(bateau);
         vue.afficherGrille(bataille.grilleJeu);
         int[] res = {demandeLigne(),demandeColonne(),demandeOrientation()};
+
+        return res;
+    }
+
+    public int[] demandePosition()
+    {
+        vue.afficherGrille(bataille.grilleJeu);
+        int[] res = {demandeLigne(),demandeColonne()};
 
         return res;
     }
