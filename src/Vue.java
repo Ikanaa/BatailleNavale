@@ -30,6 +30,25 @@ public class Vue {
     private static final String DEMANDE_ORIENTATION
             = "\nVeuillez entrez l'orientation du Bateau (1 horizontal, 2 vertical)\n";
 
+    private static final String TOUR_JOUEUR
+            = "\nTour du joueur : \n";
+    private static final String TOUR_ORDI
+            = "\nTour de l'ordinateur : \n";
+    private static final String DEMANDE_LIGNE_TIRE
+            = "\nVeuillez entrez la ligne sur laquelle tirer (1,2,3...10)\n";
+    private static final String DEMANDE_COLONNE_TIRE
+            = "\nVeuillez entrez la colonne sur laquelle tirer (A,B,C...J)\n";
+    private static final String A_L_EAU
+            = "\nÀ l'eau !\n";
+    private static final String TOUCHE
+            = "\nTouché !\n";
+    private static final String COULE
+            = "\nCoulé !\n";
+
+    private static final String VICTOIRE_JOUEUR
+            = "\nBravo ! Victoire du Joueur !\n";
+    private static final String VICTOIRE_ORDI
+            = "\nDommage ! Victoire de l'ordinateur !\n";
 
     public Vue() {
         //rien ?
@@ -113,4 +132,13 @@ public class Vue {
     public void demanderLigne() {System.out.print(DEMANDE_LIGNE);}
     public void demanderColonne() {System.out.print(DEMANDE_COLONNE);}
     public void demandeOrientation() {System.out.print(DEMANDE_ORIENTATION);}
+    public void tourJoueur() {System.out.print(TOUR_JOUEUR);}
+    public void tourOrdi() {System.out.print(TOUR_ORDI);}
+    public void demandeTireLigne(){System.out.print(DEMANDE_LIGNE_TIRE);}
+    public void demandeTireColonne(){System.out.print(DEMANDE_COLONNE_TIRE);}
+    public void aLEau() {System.out.print(A_L_EAU);}
+    public void touche() {System.out.print(TOUCHE);}
+    public void coule() {System.out.print(COULE);}
+    public void victoireJoueur() {System.out.print(VICTOIRE_JOUEUR);}
+    public void victoireOrdi() {System.out.print(VICTOIRE_ORDI);}
 }

@@ -24,7 +24,7 @@ public class Bataille {
         grilleJeu = new int [10] [10];
     }
 
-    private static final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
+    public static final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
         Map.entry(1,  new Bateau("porte-avion", 5, 1)),
         Map.entry(2,  new Bateau("croiseur", 4, 2)),
         Map.entry(3,  new Bateau("contre-torpilleur", 3, 3)),
@@ -192,5 +192,49 @@ public class Bataille {
                 }
             }
         }
+    }
+
+    public boolean couler (int[][] grille, int bateau)
+    {
+        for (int[] ligne : grille)
+            for (int colonne : ligne)
+                if (colonne == bateau)
+                    return false;
+        return true;
+    }
+
+    public int mouvement (int[][] grille, int ligne, int colonne)
+    {
+        switch (grille[ligne][colonne])
+        {
+            case 0 : case 6 :
+                //a l'eau
+            return 2;
+            default :
+                int tempBateau = grille[ligne][colonne];
+                grille[ligne][colonne] = 6;
+                if (couler(grille, tempBateau))
+                    return 1;
+                else
+                    return 0;
+        }
+    }
+
+    public int[] tirOrdinateur()
+    {
+        int[] res = {
+                aleatoireEntre(0,10),
+                aleatoireEntre(0,10)
+        };
+        return res;
+    }
+
+    public boolean vainqueur(int[][] grille)
+    {
+        for (int[] ligne : grille)
+            for (int colonne : ligne)
+                if (colonne != 6 && colonne != 0)
+                    return false;
+        return true;
     }
 }

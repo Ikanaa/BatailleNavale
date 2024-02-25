@@ -44,6 +44,7 @@ public class Controleur {
                 break;
         }
 
+        menuPrincipale();
     }
 
     /**
@@ -58,8 +59,47 @@ public class Controleur {
         bataille.initGrilleOrdi();
         bataille.initGrilleJoueur();
 
+        boolean tourJoueur = true;
+        boolean finDePartie = false;
 
-        //do things
+        while (!finDePartie)
+        {
+            int resultat = 2;
+            if (tourJoueur)
+            {
+                vue.tourJoueur();
+                resultat =
+                        bataille.mouvement(
+                                bataille.grilleJeu,
+                                demandeLigne(1),
+                                demandeColonne(1));
+            }
+            else
+            {
+                vue.tourOrdi();
+                int[] tirOrdi = bataille.tirOrdinateur();
+                resultat =
+                        bataille.mouvement(
+                                bataille.grilleOrdi,
+                                tirOrdi[0],
+                                tirOrdi[1]
+                                );
+            }
+
+            switch (resultat)
+            {
+                case 0 :
+                    vue.touche();
+                    break;
+                case 1:
+                    vue.coule();
+                    finDePartie = verifierVictoire();
+                    break;
+                case 2:
+                    vue.aLEau();
+            }
+            tourJoueur = !tourJoueur;
+        }
     }
 
     /**
@@ -155,22 +195,18 @@ public class Controleur {
     {
         vue.demanderBateau(bateau);
         vue.afficherGrille(bataille.grilleJeu);
-        int[] res = {demandeLigne(),demandeColonne(),demandeOrientation()};
+        int[] res = {demandeLigne(0),demandeColonne(0),demandeOrientation()};
 
         return res;
     }
 
-    public int[] demandePosition()
-    {
-        vue.afficherGrille(bataille.grilleJeu);
-        int[] res = {demandeLigne(),demandeColonne()};
 
-        return res;
-    }
-
-    public int demandeColonne()
+    public int demandeColonne(int etape)
     {
-        vue.demanderColonne();
+        if (etape < 1)
+            vue.demanderColonne();
+        else
+            vue.demandeTireColonne();
         while (true)
         {
             String chaine = lectureChaine();
@@ -186,9 +222,12 @@ public class Controleur {
         }
     }
 
-    public int demandeLigne()
+    public int demandeLigne(int etape)
     {
-        vue.demanderLigne();
+        if (etape < 1)
+            vue.demanderLigne();
+        else
+            vue.demandeTireLigne();
         while (true)
         {
             int colonne = lectureEntier();
@@ -212,5 +251,21 @@ public class Controleur {
             }
 
         }
+    }
+
+    public boolean verifierVictoire()
+    {
+        if (bataille.vainqueur(bataille.grilleJeu))
+        {
+            vue.victoireJoueur();
+            return true;
+        }
+        if (bataille.vainqueur(bataille.grilleOrdi))
+        {
+            vue.victoireOrdi();
+            return true;
+        }
+
+        return false;
     }
 }
