@@ -24,6 +24,7 @@ public class Bataille {
         grilleJeu = new int [10] [10];
     }
 
+    // Permet de définir les bateaux utilisé dans la partie !
     public static final Map<Integer, Bateau> LISTEBATEAU = Map.ofEntries(
         Map.entry(1,  new Bateau("porte-avion", 5, 1)),
         Map.entry(2,  new Bateau("croiseur", 4, 2)),
@@ -130,13 +131,6 @@ public class Bataille {
      *     <p/>
      */
     public void initGrilleOrdi() {
-        //Grille déjà a zero ?
-//        // Mise a zero de la Grille
-//        for ( int [ ] ligne : grilleOrdi)
-//            // case est reservé.... donc caase
-//            for (int caase : ligne)
-//                caase = 0;
-
 
         for (Map.Entry<Integer, Bateau> entree :  LISTEBATEAU.entrySet())
         {
@@ -165,6 +159,12 @@ public class Bataille {
 
     }
 
+    /**
+     * <h2>initGrilleJoueur</h2>
+     * <p>
+     *     Initialise la grille du joueur en lui demandant la position des bateaux
+     * </p>
+     */
     public void initGrilleJoueur()
     {
         for (Map.Entry<Integer, Bateau> entree :  LISTEBATEAU.entrySet())
@@ -194,6 +194,15 @@ public class Bataille {
         }
     }
 
+    /**
+     * <h2>couler</h2>
+     * <p>
+     *     Permet de vérifier si un bateau a été coulé dans une grille
+     * </p>
+     * @param grille grille sur laquelle on regarde : int[][]
+     * @param bateau entier qui représente le bateau dans la grille : int
+     * @return Si le bateau a été coulé : boolean
+     */
     public boolean couler (int[][] grille, int bateau)
     {
         for (int[] ligne : grille)
@@ -203,6 +212,16 @@ public class Bataille {
         return true;
     }
 
+    /**
+     * <h2>mouvement</h2>
+     * <p>
+     *     Represente un tire sur une case.
+     * </p>
+     * @param grille la grille sur laquelle on tire : int[][]
+     * @param ligne la ligne du tire : int
+     * @param colonne la colonne du tire : int
+     * @return Un entier qui représente le resultat du tire : 0 = touche | 1 = coule | 2 = a l'eau : int
+     */
     public int mouvement (int[][] grille, int ligne, int colonne)
     {
         switch (grille[ligne][colonne])
@@ -220,6 +239,13 @@ public class Bataille {
         }
     }
 
+    /**
+     * <h2>tirOrdinateur</h2>
+     * <p>
+     *     Donne un tableau de 2 entier aleatoire qui représente le tire de l'ordinateur
+     * </p>
+     * @return Tableau de 2 entier aleatoire : int[]
+     */
     public int[] tirOrdinateur()
     {
         int[] res = {
@@ -229,6 +255,14 @@ public class Bataille {
         return res;
     }
 
+    /**
+     * <h2>vainqueur</h2>
+     * <p>
+     *     Vérifie dans une grille si tous les bateaux sont coulés
+     * </p>
+     * @param grille la grille que l'on regarde : int[][]
+     * @return Si tous les bateaux sont coulés : boolean
+     */
     public boolean vainqueur(int[][] grille)
     {
         for (int[] ligne : grille)

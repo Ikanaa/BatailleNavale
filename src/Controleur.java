@@ -15,7 +15,7 @@ public class Controleur {
 
     Bataille bataille = new Bataille();
     Vue vue = new Vue();
-    private static final int[ ] OPTION_MENU_PRINCIPALE = {1};
+    private static final int[ ] OPTION_MENU_PRINCIPALE = {1,2};
     public static BufferedReader lisseurTampon = new BufferedReader (new InputStreamReader(System.in));
 
     public Controleur() {
@@ -30,21 +30,24 @@ public class Controleur {
      */
     public void menuPrincipale()
     {
-        int option = -1;
-        while (!entierDansListe(OPTION_MENU_PRINCIPALE, option))
+        boolean quitter = false;
+        while (!quitter)
         {
-            vue.afficherMenuPrincipale();
-            option = lectureEntier();
+            int option = -1;
+            // Penser a rajouter l'option dans la liste OPTION_MENU_PRINCIPALE
+            while (!entierDansListe(OPTION_MENU_PRINCIPALE, option)) {
+                vue.afficherMenuPrincipale();
+                option = lectureEntier();
+            }
+            switch (option) {
+                case 1:
+                    //démarer jeux
+                    demarrerJeu();
+                    break;
+                case 2:
+                    quitter = true;
+            }
         }
-        switch (option)
-        {
-            case 1:
-                //démarer jeux
-                demarrerJeu();
-                break;
-        }
-
-        menuPrincipale();
     }
 
     /**
@@ -67,20 +70,25 @@ public class Controleur {
             int resultat = 2;
             if (tourJoueur)
             {
+                vue.afficherGrille(bataille.grilleJeu);
                 vue.tourJoueur();
+                // Resultat entre 0 touche, 1 coule, 2 a l'eau
                 resultat =
                         bataille.mouvement(
-                                bataille.grilleJeu,
+                                bataille.grilleOrdi,
                                 demandeLigne(1),
                                 demandeColonne(1));
             }
             else
             {
+                // ligne du dessous pour voir la grille de l'ordi (debug)
+                //vue.afficherGrille(bataille.grilleOrdi);
                 vue.tourOrdi();
                 int[] tirOrdi = bataille.tirOrdinateur();
+                // Resultat entre 0 touche, 1 coule, 2 a l'eau
                 resultat =
                         bataille.mouvement(
-                                bataille.grilleOrdi,
+                                bataille.grilleJeu,
                                 tirOrdi[0],
                                 tirOrdi[1]
                                 );
@@ -195,16 +203,25 @@ public class Controleur {
     {
         vue.demanderBateau(bateau);
         vue.afficherGrille(bataille.grilleJeu);
-        int[] res = {demandeLigne(0),demandeColonne(0),demandeOrientation()};
+        int[] res = {demandeLigne(0, bateau),demandeColonne(0, bateau),demandeOrientation(bateau)};
 
         return res;
     }
 
 
-    public int demandeColonne(int etape)
+    /**
+     * <h2>demandeColonne</h2>
+     * <p>
+     *     Demande la colonne au joueur soit a l'étape 0 pour placer un bateau soit a l'étape 1 pour tirer.
+     * </p>
+     * @param etape 0 ou 1, étape a l'aquelle se trouve le jeux (preparation/combat) : int
+     * @param bateau dans le cas du palcement d'un bateau : bateau
+     * @return indice de la colonne choisie : int
+     */
+    public int demandeColonne(int etape, Bateau bateau)
     {
         if (etape < 1)
-            vue.demanderColonne();
+            vue.demanderColonne(bateau);
         else
             vue.demandeTireColonne();
         while (true)
@@ -222,10 +239,45 @@ public class Controleur {
         }
     }
 
-    public int demandeLigne(int etape)
+    /**
+     * <h2>demandeColonne</h2>
+     * <p>
+     *     Surcharge de demandeColonne sans bateau, inutile dans la cas de l'étape 1
+     * </p>
+     * @param etape 0 ou 1, étape a l'aquelle se trouve le jeux (preparation/combat) : int
+     * @return indice de la colonne choisie : int
+     */
+    public int demandeColonne(int etape)
+    {
+        vue.demandeTireColonne();
+        while (true)
+        {
+            String chaine = lectureChaine();
+            char lettre = chaine.charAt(0);
+            if (lettre>64 && lettre<75)
+            {
+                return lettre - 65;
+            }
+            if (lettre>96 && lettre<123)
+            {
+                return lettre - 97;
+            }
+        }
+    }
+
+    /**
+     * <h2>demandeLigne</h2>
+     * <p>
+     *     Demande la ligne au joueur soit a l'étape 0 pour placer un bateau soit a l'étape 1 pour tirer.
+     * </p>
+     * @param etape 0 ou 1, étape a l'aquelle se trouve le jeux (preparation/combat) : int
+     * @param bateau dans le cas du palcement d'un bateau : bateau
+     * @return indice de la ligne choisie : int
+     */
+    public int demandeLigne(int etape, Bateau bateau)
     {
         if (etape < 1)
-            vue.demanderLigne();
+            vue.demanderLigne(bateau);
         else
             vue.demandeTireLigne();
         while (true)
@@ -239,9 +291,39 @@ public class Controleur {
         }
     }
 
-    public int demandeOrientation()
+    /**
+     * <h2>demandeLigne</h2>
+     * <p>
+     *     Surcharge de demandeLigne sans bateau, inutile dans la cas de l'étape 1
+     * </p>
+     * @param etape 0 ou 1, étape a l'aquelle se trouve le jeux (preparation/combat) : int
+     * @return indice de la ligne choisie : int
+     */
+    public int demandeLigne(int etape)
     {
-        vue.demandeOrientation();
+        vue.demandeTireLigne();
+        while (true)
+        {
+            int colonne = lectureEntier();
+            if (colonne>0 && colonne<11)
+            {
+                return colonne - 1;
+            }
+
+        }
+    }
+
+    /**
+     * <h2>demandeOrientation</h2>
+     * <p>
+     *     Demande l'orientation du bateau que l'on souhaite placer au joueur
+     * </p>
+     * @param bateau : Bateau que l'on souhaite placer : bateau
+     * @return 1 ou 2, 1 pour horizontale 2 pour vertical
+     */
+    public int demandeOrientation(Bateau bateau)
+    {
+        vue.demandeOrientation(bateau);
         while (true)
         {
             int orientation = lectureEntier();
@@ -253,16 +335,23 @@ public class Controleur {
         }
     }
 
+    /**
+     * <h2>verifierVictoire</h2>
+     * <p>
+     *     Permet de savoir si l'ordinateur ou le joueur ont gagné.
+     * </p>
+     * @return Si l'un des deux a gagné : boolean
+     */
     public boolean verifierVictoire()
     {
         if (bataille.vainqueur(bataille.grilleJeu))
         {
-            vue.victoireJoueur();
+            vue.victoireOrdi();
             return true;
         }
         if (bataille.vainqueur(bataille.grilleOrdi))
         {
-            vue.victoireOrdi();
+            vue.victoireJoueur();
             return true;
         }
 

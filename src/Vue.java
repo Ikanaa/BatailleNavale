@@ -7,6 +7,11 @@
 
 public class Vue {
 
+
+    /*
+        Tous les textes sont dans des variables pour plus de facilité a les changer.
+     */
+
     private static final String ANSI_ZERO = "\u001B[0m";
     private static final String ANSI_NOIR = "\u001B[30m";
     private static final String ANSI_ROUGE = "\u001B[31m";
@@ -21,14 +26,21 @@ public class Vue {
             = "\n"
             + "Bienvenue dans le Menu de la Bataille Navale ! \n"
             + "   Option du menu : \n"
-            + "     1 - Démarrer le jeux"
+            + "     1 - Démarrer le jeux\n"
+            + "     2 - Quitter le programme"
             + "\n\n\n";
-    private static final String DEMANDE_LIGNE
-            = "\nVeuillez entrez la ligne sur laquelle placer le Bateau (1,2,3...10)\n";
-    private static final String DEMANDE_COLONNE
-            = "\nVeuillez entrez la colonne sur laquelle placer le Bateau (A,B,C...J)\n";
-    private static final String DEMANDE_ORIENTATION
-            = "\nVeuillez entrez l'orientation du Bateau (1 horizontal, 2 vertical)\n";
+    private static final String DEMANDE_LIGNE_P1
+            = "\nVeuillez entrez la ligne sur laquelle placer le ";
+    private static final String DEMANDE_LIGNE_P2
+            = " (1,2,3...10)\n";
+    private static final String DEMANDE_COLONNE_P1
+            = "\nVeuillez entrez la colonne sur laquelle placer le ";
+    private static final String DEMANDE_COLONNE_P2
+            = " (A,B,C...J)\n";
+    private static final String DEMANDE_ORIENTATION_P1
+            = "\nVeuillez entrez l'orientation du ";
+    private static final String DEMANDE_ORIENTATION_P2
+            = " (1 horizontal, 2 vertical)\n";
 
     private static final String TOUR_JOUEUR
             = "\nTour du joueur : \n";
@@ -122,6 +134,7 @@ public class Vue {
         return str;
     }
 
+
     public void demanderBateau(Bateau bateau)
     {
         System.out.print(
@@ -129,9 +142,18 @@ public class Vue {
         );
     }
 
-    public void demanderLigne() {System.out.print(DEMANDE_LIGNE);}
-    public void demanderColonne() {System.out.print(DEMANDE_COLONNE);}
-    public void demandeOrientation() {System.out.print(DEMANDE_ORIENTATION);}
+    public void demanderLigne(Bateau bateau) {
+        System.out.print(
+                DEMANDE_LIGNE_P1 + bateau.obtenirType() + " (" + bateau.obtenirTaille() + ")" + DEMANDE_LIGNE_P2);
+    }
+    public void demanderColonne(Bateau bateau) {
+        System.out.print(
+                DEMANDE_COLONNE_P1 + bateau.obtenirType() + " (" + bateau.obtenirTaille() + ")" + DEMANDE_COLONNE_P2);
+    }
+    public void demandeOrientation(Bateau bateau) {
+        System.out.print(
+                DEMANDE_ORIENTATION_P1 + bateau.obtenirType() + " (" + bateau.obtenirTaille() + ")" + DEMANDE_ORIENTATION_P2);
+    }
     public void tourJoueur() {System.out.print(TOUR_JOUEUR);}
     public void tourOrdi() {System.out.print(TOUR_ORDI);}
     public void demandeTireLigne(){System.out.print(DEMANDE_LIGNE_TIRE);}
