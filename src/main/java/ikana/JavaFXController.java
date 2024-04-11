@@ -18,7 +18,18 @@ public class JavaFXController {
             return;
         Button bouton = (Button) obj;
 
-        System.out.println(GridPane.getRowIndex(bouton) + " | " + GridPane.getColumnIndex(bouton));
+        System.out.println("Ennemi : " + GridPane.getRowIndex(bouton) + " | " + GridPane.getColumnIndex(bouton));
+    }
+
+    @FXML
+    void actionGrilleJoueur(ActionEvent event)
+    {
+        Object obj = event.getSource();
+        if ((Button) obj == null)
+            return;
+        Button bouton = (Button) obj;
+
+        System.out.println( "Joueur : "+ GridPane.getRowIndex(bouton) + " | " + GridPane.getColumnIndex(bouton));
     }
 
 }

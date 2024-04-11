@@ -1,4 +1,4 @@
-module com.example.demo {
+module ikana {
     requires javafx.controls;
     requires javafx.fxml;
 
