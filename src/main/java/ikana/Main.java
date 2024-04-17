@@ -8,15 +8,25 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+
+    public static final int MaxHeight = 700;
+    public static final int Height = 600;
+
+
+    public static final int MaxWidth = 1200;
+    public static final int Width = 800;
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("menu.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 750, 900);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("game.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), Width, Height);
         stage.setTitle("Bataille Naval !");
-        stage.setMinHeight(900);
-        stage.setMaxHeight(900);
-        stage.setMinWidth(750);
-        stage.setMaxWidth(750);
+
+        stage.setMinHeight(Height);
+        stage.setMaxHeight(MaxHeight);
+
+        stage.setMinWidth(Width);
+        stage.setMaxWidth(MaxWidth);
+
         stage.setScene(scene);
         stage.show();
     }
