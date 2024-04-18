@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 // https://opengameart.org/content/sea-warfare-set-ships-and-more
@@ -16,8 +17,27 @@ import javafx.scene.layout.GridPane;
 
 public class JavaFXController {
 
+
+    @FXML
+    private ImageView contreTorpilleur;
+
+    @FXML
+    private ImageView croiseur;
+
+    @FXML
+    private ImageView porteAvion;
+
+    @FXML
+    private ImageView sousMarin;
+
+    @FXML
+    private ImageView torpilleur;
+
+
     @FXML
     private GridPane grilleEnnemie;
+    @FXML
+    private GridPane grilleJoueur;
     @FXML
     void actionGrilleEnnemi(ActionEvent event)
     {
