@@ -158,7 +158,7 @@ public class ControllerSelection {
 
     @FXML
     void demarrerPartie(ActionEvent event) {
-
+        referenceMain.selectionVersJeu();
     }
 
     @FXML

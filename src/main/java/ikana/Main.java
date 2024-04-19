@@ -11,6 +11,8 @@ public class Main extends Application {
 
     Bataille bataille;
 
+    Stage planche;
+
     private Scene sceneJeu;
     private Scene sceneMenu;
     private Scene sceneSelection;
@@ -21,16 +23,23 @@ public class Main extends Application {
 
     public static final int MaxWidth = 1200;
     public static final int Width = 800;
+
+    ControllerJeu controllerJeu;
+    ControllerSelection controllerSelection;
     @Override
     public void start(Stage stage) throws IOException {
+        planche = stage;
         bataille = new Bataille();
 
         FXMLLoader chargementJeu = new FXMLLoader(Main.class.getResource("game.fxml"));
         sceneJeu = new Scene(chargementJeu.load(), Width, Height);
+        controllerJeu=  chargementJeu.getController();
+        controllerJeu.setBataille(bataille);
+        controllerJeu.setReferenceMain(this);
 
         FXMLLoader chargementSelection = new FXMLLoader(Main.class.getResource("selection_bateau.fxml"));
         sceneSelection = new Scene(chargementSelection.load(), Width, Height);
-        ControllerSelection controllerSelection= ((ControllerSelection) chargementSelection.getController());
+        controllerSelection= chargementSelection.getController();
         controllerSelection.setBataille(bataille);
         controllerSelection.setReferenceMain(this);
 
@@ -49,7 +58,14 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public void selectionVersJeu()
+    {
+        planche.setScene(sceneJeu);
+        controllerJeu.placerTousBateau();
+    }
 }
+
 
 
 //public class Main {

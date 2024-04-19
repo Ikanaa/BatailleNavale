@@ -1,5 +1,11 @@
 package ikana;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -263,5 +269,34 @@ public class Bataille {
                 if (colonne != 6 && colonne != 0)
                     return false;
         return true;
+    }
+
+    int[][] getPositionsJoueur()
+    {
+        int[][] result = new int[5][3];
+        int[] aEviter = {0,0,0,0,0,0};
+
+        for (int x = 0; x<10; x++)
+            for (int y = 0;y<10;y++)
+            {
+                if (contenir(aEviter, grilleJeu[x][y]))
+                    continue;
+                aEviter[grilleJeu[x][y]] = grilleJeu[x][y];
+                int orientation = 0;
+                if (y < 9)
+                    if (grilleJeu[x][y+1] == grilleJeu[x][y])
+                        orientation = 1;
+                result[grilleJeu[x][y]] = new int[] {x, y, orientation};
+            }
+
+        return result;
+    }
+
+    boolean contenir(int[] list, int quoi)
+    {
+        for (int el : list)
+            if (el == quoi)
+                return true;
+        return false;
     }
 }
