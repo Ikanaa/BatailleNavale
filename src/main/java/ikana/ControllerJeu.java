@@ -3,7 +3,6 @@ package ikana;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -15,8 +14,7 @@ import javafx.scene.layout.GridPane;
 // sous-marin          decalage de 29
 // torpilleur          decalage de 15
 
-public class JavaFXController {
-
+public class ControllerJeu {
 
     @FXML
     private ImageView contreTorpilleur;

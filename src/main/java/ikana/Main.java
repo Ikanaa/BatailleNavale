@@ -9,6 +9,10 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    private Scene sceneJeu;
+    private Scene sceneMenu;
+    private Scene sceneSelection;
+
     public static final int MaxHeight = 700;
     public static final int Height = 600;
 
@@ -17,8 +21,12 @@ public class Main extends Application {
     public static final int Width = 800;
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("game.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), Width, Height);
+        FXMLLoader chargementJeu = new FXMLLoader(Main.class.getResource("game.fxml"));
+        sceneJeu = new Scene(chargementJeu.load(), Width, Height);
+
+        FXMLLoader chargementSelection = new FXMLLoader(Main.class.getResource("selection_bateau.fxml"));
+        sceneSelection = new Scene(chargementSelection.load(), Width, Height);
+
         stage.setTitle("Bataille Naval !");
 
         stage.setMinHeight(Height);
@@ -27,7 +35,7 @@ public class Main extends Application {
         stage.setMinWidth(Width);
         stage.setMaxWidth(MaxWidth);
 
-        stage.setScene(scene);
+        stage.setScene(sceneSelection);
         stage.show();
     }
     
