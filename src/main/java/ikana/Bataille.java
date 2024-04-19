@@ -47,7 +47,7 @@ public class Bataille {
      * @param t Taille du bateau entre 2 et 5 : int
      * @return  Si la position est valide ou pas : Boolean
      */
-    public boolean positionValide (int [ ] [ ] grille, int ligne, int colonne, int direction, int t)
+    public boolean positionValide (int [ ] [ ] grille, int ligne, int colonne, int direction, int t, int id)
     {
         if (t < 2) t = 2;
         if (t > 5) t = 5;
@@ -58,7 +58,7 @@ public class Bataille {
             if (ligne > 9 || colonne > 9 || ligne < 0 || colonne < 0)
                 return false;
 
-            if (grille[ligne][colonne] != 0)
+            if (grille[ligne][colonne] != 0 && grille[ligne][colonne] != id)
                 return false;
 
             //direction paire -> Vertical
@@ -104,12 +104,15 @@ public class Bataille {
      * @return  Retourne le tableau resultat contenant le bateau s'il a été possible de l'ajouter int [ ] [ ]
      */
     public int [ ] [ ] ajouteBat(int [ ] [ ] grille, int ligne, int colonne, int direction, Bateau bat) throws Exception {
-        if (!positionValide(grille, ligne, colonne, direction, bat.obtenirTaille()))
+        if (!positionValide(grille, ligne, colonne, direction, bat.obtenirTaille(), bat.obtenirIdentifiant()))
             throw new Exception("Impossible d'ajouter le bateau ! As tu vérifié que y'avait la place ?");
 
+        for (int x = 0; x < 10; x++)
+            for (int y = 0; y < 10; y++)
+                if (grille[x][y] == bat.obtenirIdentifiant() )
+                    grille[x][y] = 0;
+
         direction = direction%2;
-
-
 
         for (int caseRestante = bat.obtenirTaille(); caseRestante > 0 ; caseRestante--) {
 
@@ -145,7 +148,7 @@ public class Bataille {
                 int colonne = aleatoireEntre(0,10);
                 int direction = aleatoireEntre(1, 3);
 
-                if (positionValide(grilleOrdi, ligne, colonne, direction, bateauActuel.obtenirTaille()))
+                if (positionValide(grilleOrdi, ligne, colonne, direction, bateauActuel.obtenirTaille(), bateauActuel.obtenirIdentifiant()))
                 {
                     posOk = true;
 
@@ -167,33 +170,21 @@ public class Bataille {
      *     Initialise la grille du joueur en lui demandant la position des bateaux
      * </p>
      */
-    public void initGrilleJoueur()
+    public boolean initGrilleJoueur(int idBateau, int ligne, int colonne, int direction)
     {
-        for (Map.Entry<Integer, Bateau> entree :  LISTEBATEAU.entrySet())
-        {
-            Bateau bateauActuel = entree.getValue();
+                Bateau bateauActuel = LISTEBATEAU.get(idBateau);
 
-            boolean posOk = false;
-            while (!posOk)
-            {
-                int[] info = {0,0,0};//controleur.demandePositionBateau(bateauActuel);
-                int ligne = info[0];
-                int colonne = info[1];
-                int direction = info[2];
-
-                if (positionValide(grilleJeu, ligne, colonne, direction, bateauActuel.obtenirTaille()))
+                if (positionValide(grilleJeu, ligne, colonne, direction, bateauActuel.obtenirTaille(), bateauActuel.obtenirIdentifiant()))
                 {
-                    posOk = true;
-
                     //Ajout du bateau quand tout est ok !
                     try {
                         grilleJeu = ajouteBat(grilleJeu, ligne, colonne, direction, bateauActuel);
                     } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        return false;
                     }
+                    return true;
                 }
-            }
-        }
+                return false;
     }
 
     /**

@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class Main extends Application {
 
+    Bataille bataille;
+
     private Scene sceneJeu;
     private Scene sceneMenu;
     private Scene sceneSelection;
@@ -21,11 +23,16 @@ public class Main extends Application {
     public static final int Width = 800;
     @Override
     public void start(Stage stage) throws IOException {
+        bataille = new Bataille();
+
         FXMLLoader chargementJeu = new FXMLLoader(Main.class.getResource("game.fxml"));
         sceneJeu = new Scene(chargementJeu.load(), Width, Height);
 
         FXMLLoader chargementSelection = new FXMLLoader(Main.class.getResource("selection_bateau.fxml"));
         sceneSelection = new Scene(chargementSelection.load(), Width, Height);
+        ControllerSelection controllerSelection= ((ControllerSelection) chargementSelection.getController());
+        controllerSelection.setBataille(bataille);
+        controllerSelection.setReferenceMain(this);
 
         stage.setTitle("Bataille Naval !");
 
@@ -53,4 +60,4 @@ public class Main extends Application {
 //
 //        controleur.menuPrincipale();
 //    }
-//}
+//

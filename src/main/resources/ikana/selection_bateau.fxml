@@ -23,7 +23,7 @@
             </Text>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="600.0" prefWidth="700.0">
+      <HBox fx:id="baseBox" alignment="CENTER" prefHeight="600.0" prefWidth="700.0">
          <children>
             <ImageView fx:id="torpilleur" fitHeight="56.0" fitWidth="17.0" onMouseClicked="#cliqueTorpilleur" pickOnBounds="true">
                <image>
