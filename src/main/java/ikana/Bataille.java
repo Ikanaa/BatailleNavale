@@ -282,13 +282,33 @@ public class Bataille {
                 if (contenir(aEviter, grilleJeu[x][y]))
                     continue;
                 aEviter[grilleJeu[x][y]] = grilleJeu[x][y];
-                int orientation = 0;
-                if (y < 9)
+                int orientation = 1;
+                if (y < 8)
                     if (grilleJeu[x][y+1] == grilleJeu[x][y])
-                        orientation = 1;
-                result[grilleJeu[x][y]] = new int[] {x, y, orientation};
+                        orientation = 0;
+                result[grilleJeu[x][y]-1] = new int[] {x, y, orientation};
             }
 
+        return result;
+    }
+
+    int[][] getPositionsEnnemi()
+    {
+        int[][] result = new int[5][3];
+        int[] aEviter = {0,0,0,0,0,0};
+
+        for (int x = 0; x<10; x++)
+            for (int y = 0;y<10;y++)
+            {
+                if (contenir(aEviter, grilleOrdi[x][y]))
+                    continue;
+                aEviter[grilleOrdi[x][y]] = grilleOrdi[x][y];
+                int orientation = 1;
+                if (y < 8)
+                    if (grilleOrdi[x][y+1] == grilleOrdi[x][y])
+                        orientation = 0;
+                result[grilleOrdi[x][y]-1] = new int[] {x, y, orientation};
+            }
         return result;
     }
 

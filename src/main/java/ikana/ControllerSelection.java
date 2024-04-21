@@ -3,10 +3,10 @@ package ikana;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 
 // https://opengameart.org/content/sea-warfare-set-ships-and-more
 // NOTA
@@ -192,5 +192,15 @@ public class ControllerSelection {
         }
 
         boutonDemarrer.setDisable(false);
+    }
+
+    public void appliquerFond()
+    {
+        BackgroundImage mer = new BackgroundImage(new Image("ikana/image/lapis.jpg",512,512,false,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+
+        grilleJoueur.setBackground(new Background(mer));
     }
 }
