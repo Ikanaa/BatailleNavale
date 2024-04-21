@@ -1,3 +1,5 @@
+package ikana;
+
 /**
  *   <H1>Bateau<H1/>
  *      @author <h2>Louis Saffré<h2/>
