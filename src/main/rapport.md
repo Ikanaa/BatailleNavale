@@ -291,3 +291,13 @@ graph TD
     class N6 note
     UC6 -.- N6
 ```
+
+### Test Fonctionnels
+
+Pour pouvoir automatiser le processus de test fonctionnel on ajoute une classe TestFonctionnels.
+Dans la classe main, on ajoute une condition qui vérifie l'argument de lancement ```test``` et qui, le cas échéant, exécute tous les tests sans lancer l'application.
+Il faut noter que les tests d'intégration ne permettent pas de garantir le bon fonctionnement de l'interface graphique qui devrait être éprouvé par un humain.
+
+Résultat : Tous les tests d'intégration passé ✅
+
+### NB

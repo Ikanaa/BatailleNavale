@@ -51,7 +51,20 @@ public class Main extends Application {
     }
     
     public static void main(String[] args) {
-        launch();
+        if (args.length > 0 && args[0].equals("test")) {
+            executerTests();
+        } else {
+            launch(args);
+        }
+    }
+
+    /**
+     * Exécute les tests fonctionnels
+     */
+    public static void executerTests() {
+        System.out.println("Lancement des tests fonctionnels de l'application Bataille Navale");
+        TestFonctionnels tests = new TestFonctionnels();
+        tests.executerTests();
     }
 
     public void selectionVersJeu()
